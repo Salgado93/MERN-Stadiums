@@ -22,4 +22,12 @@ router.get("/:sid", (req, res, next) => {
   res.json({ stadium });
 });
 
+router.get("/user/:uid", (req, res, next) => {
+  const userId = req.params.uid;
+  const stadium = DUMMY_STADIUMS.find((s) => {
+    return s.creator === userId;
+  });
+  res.json({ stadium });
+});
+
 module.exports = router;
