@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http-error");
 
 const DUMMY_STADIUMS = [
@@ -39,6 +40,7 @@ const getStadiumByUserId = (req, res, next) => {
 const createStadium = (req, res, next) => {
   const { title, description, coordinates, address, creator } = req.body; //const title = req.body.title;
   const createdStadium = {
+    id: uuidv4(),
     title,
     description,
     location: coordinates,
