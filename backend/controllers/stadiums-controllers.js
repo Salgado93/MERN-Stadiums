@@ -13,7 +13,7 @@ const DUMMY_STADIUMS = [
 
 const getStadiumById = (req, res, next) => {
   //console.log("GET Request in Stadiums");
-  const stadiumId = req.params.sid; // Tomar valor concreto en el url.
+  const stadiumId = req.params.sid; // Tomar valor concreto del url.
   const stadium = DUMMY_STADIUMS.find((s) => {
     return s.id === stadiumId;
   });
@@ -36,5 +36,19 @@ const getStadiumByUserId = (req, res, next) => {
   res.json({ stadium });
 };
 
+const createStadium = (req, res, next) => {
+  const { title, description, coordinates, address, creator } = req.body; //const title = req.body.title;
+  const createdStadium = {
+    title,
+    description,
+    location: coordinates,
+    address,
+    creator,
+  };
+  DUMMY_STADIUMS.push(createdStadium);
+  res.status(201).json({ stadium: createdStadium });
+};
+
 exports.getStadiumById = getStadiumById;
 exports.getStadiumByUserId = getStadiumByUserId;
+exports.createStadium = createStadium;

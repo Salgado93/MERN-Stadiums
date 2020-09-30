@@ -4,6 +4,7 @@ const stadiumsRoutes = require("./routes/stadiums-routes");
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use("/api/stadiums", stadiumsRoutes);
 app.use((error, req, res, next) => {
   if (res.headerSent) {
