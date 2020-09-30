@@ -19,6 +19,11 @@ router.get("/:sid", (req, res, next) => {
   const stadium = DUMMY_STADIUMS.find((s) => {
     return s.id === stadiumId;
   });
+  if (!stadium) {
+    const error = new Error("Could not find a stadium for the provided id.");
+    error.code = 404;
+    throw error;
+  }
   res.json({ stadium });
 });
 
@@ -27,6 +32,13 @@ router.get("/user/:uid", (req, res, next) => {
   const stadium = DUMMY_STADIUMS.find((s) => {
     return s.creator === userId;
   });
+  if (!stadium) {
+    const error = new Error(
+      "Could not find a stadium for the provided user id."
+    );
+    error.code = 404;
+    return next(error);
+  }
   res.json({ stadium });
 });
 
