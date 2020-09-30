@@ -1,5 +1,5 @@
 const express = require("express");
-
+const HttpError = require("../models/http-error");
 const router = express.Router();
 
 const DUMMY_STADIUMS = [
@@ -20,9 +20,7 @@ router.get("/:sid", (req, res, next) => {
     return s.id === stadiumId;
   });
   if (!stadium) {
-    const error = new Error("Could not find a stadium for the provided id.");
-    error.code = 404;
-    throw error;
+    throw new HttpError("Could not find a stadium for the provided id.", 404);
   }
   res.json({ stadium });
 });
@@ -33,11 +31,9 @@ router.get("/user/:uid", (req, res, next) => {
     return s.creator === userId;
   });
   if (!stadium) {
-    const error = new Error(
-      "Could not find a stadium for the provided user id."
+    return next(
+      new HttpError("Could not find a stadium for the provided user id.", 404)
     );
-    error.code = 404;
-    return next(error);
   }
   res.json({ stadium });
 });
