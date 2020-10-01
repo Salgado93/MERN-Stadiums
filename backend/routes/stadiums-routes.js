@@ -14,7 +14,11 @@ router.post(
   ],
   stadiumsControllers.createStadium
 );
-router.patch("/:sid", stadiumsControllers.updateStadium);
+router.patch(
+  "/:sid",
+  [check("title").not().isEmpty(), check("description").isLength({ min: 5 })],
+  stadiumsControllers.updateStadium
+);
 router.delete("/:sid", stadiumsControllers.deleteStadium);
 
 module.exports = router;

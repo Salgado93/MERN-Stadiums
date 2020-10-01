@@ -58,6 +58,11 @@ const createStadium = (req, res, next) => {
 };
 
 const updateStadium = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    //console.log(errors);
+    throw new HttpError("Invalid Inputs, check your data.", 422);
+  }
   const { title, description } = req.body;
   const stadiumId = req.params.sid;
   const updateStadium = { ...DUMMY_STADIUMS.find((s) => s.id === stadiumId) };
@@ -70,6 +75,9 @@ const updateStadium = (req, res, next) => {
 
 const deletePlace = (req, res, next) => {
   const stadiumId = req.params.sid;
+  if (!DUMMY_STADIUMS.find((s) => s.id === stadiumId)) {
+    throw new HttpError("Could not find a stadium for the provided id.", 404);
+  }
   DUMMY_STADIUMS = DUMMY_STADIUMS.filter((s) => s.id !== stadiumId);
   res.status(200).json({ message: "Stadium Deleted!" });
 };
