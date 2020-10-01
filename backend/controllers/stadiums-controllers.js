@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const getCoordinates = require("../util/location");
 
 let DUMMY_STADIUMS = [
   {
@@ -32,19 +33,30 @@ const getStadiumsByUserId = (req, res, next) => {
   });
   if (!stadiums || stadiums.length === 0) {
     return next(
-      new HttpError("Could not find stadiums for the provided user id.", 404)
+      // new HttpError("Could not find stadiums for the provided user id.", 404) NO ASYNC
+      next(
+        new HttpError("Could not find stadiums for the provided user id.", 404)
+      )
     );
   }
   res.json({ stadiums });
 };
 
-const createStadium = (req, res, next) => {
+const createStadium = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
     throw new HttpError("Invalid Inputs, check your data.", 422);
   }
-  const { title, description, coordinates, address, creator } = req.body; //const title = req.body.title;
+  //const { title, description, coordinates, address, creator } = req.body; //const title = req.body.title;
+  const { title, description, address, creator } = req.body;
+  let coordinates;
+  try {
+    coordinates = await getCoordinates(address);
+  } catch (error) {
+    return next(error);
+  }
+
   const createdStadium = {
     id: uuidv4(),
     title,
