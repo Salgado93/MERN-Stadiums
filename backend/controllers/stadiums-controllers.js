@@ -50,6 +50,7 @@ const createStadium = (req, res, next) => {
   DUMMY_STADIUMS.push(createdStadium);
   res.status(201).json({ stadium: createdStadium });
 };
+
 const updateStadium = (req, res, next) => {
   const { title, description } = req.body;
   const stadiumId = req.params.sid;
@@ -60,6 +61,7 @@ const updateStadium = (req, res, next) => {
   DUMMY_STADIUMS[stadiumIndex] = updateStadium;
   res.status(200).json({ stadium: updateStadium });
 };
+
 const deletePlace = (req, res, next) => {
   const stadiumId = req.params.sid;
   DUMMY_STADIUMS = DUMMY_STADIUMS.filter((s) => s.id !== stadiumId);
