@@ -46,7 +46,7 @@ const createStadium = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    throw new HttpError("Invalid Inputs, check your data.", 422);
+    return next(new HttpError("Invalid Inputs, check your data.", 422));
   }
   //const { title, description, coordinates, address, creator } = req.body; //const title = req.body.title;
   const { title, description, address, creator } = req.body;
