@@ -24,17 +24,17 @@ const getStadiumById = (req, res, next) => {
   res.json({ stadium });
 };
 
-const getStadiumByUserId = (req, res, next) => {
+const getStadiumsByUserId = (req, res, next) => {
   const userId = req.params.uid;
-  const stadium = DUMMY_STADIUMS.find((s) => {
+  const stadiums = DUMMY_STADIUMS.filter((s) => {
     return s.creator === userId;
   });
-  if (!stadium) {
+  if (!stadiums || stadiums.length === 0) {
     return next(
-      new HttpError("Could not find a stadium for the provided user id.", 404)
+      new HttpError("Could not find stadiums for the provided user id.", 404)
     );
   }
-  res.json({ stadium });
+  res.json({ stadiums });
 };
 
 const createStadium = (req, res, next) => {
@@ -67,7 +67,7 @@ const deletePlace = (req, res, next) => {
 };
 
 exports.getStadiumById = getStadiumById;
-exports.getStadiumByUserId = getStadiumByUserId;
+exports.getStadiumsByUserId = getStadiumsByUserId;
 exports.createStadium = createStadium;
 exports.updateStadium = updateStadium;
 exports.deleteStadium = deletePlace;
