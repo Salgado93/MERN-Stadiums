@@ -5,5 +5,7 @@ const router = express.Router();
 router.get("/:sid", stadiumsControllers.getStadiumById);
 router.get("/user/:uid", stadiumsControllers.getStadiumByUserId);
 router.post("/", stadiumsControllers.createStadium);
+router.patch("/:sid", stadiumsControllers.updateStadium);
+router.delete("/:sid", stadiumsControllers.deleteStadium);
 
 module.exports = router;

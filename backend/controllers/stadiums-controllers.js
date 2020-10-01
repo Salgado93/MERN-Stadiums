@@ -50,7 +50,20 @@ const createStadium = (req, res, next) => {
   DUMMY_STADIUMS.push(createdStadium);
   res.status(201).json({ stadium: createdStadium });
 };
+const updateStadium = (req, res, next) => {
+  const { title, description } = req.body;
+  const stadiumId = req.params.sid;
+  const updateStadium = { ...DUMMY_STADIUMS.find((s) => s.id === stadiumId) };
+  const stadiumIndex = DUMMY_STADIUMS.findIndex((s) => s.id === stadiumId);
+  updateStadium.title = title;
+  updateStadium.description = description;
+  DUMMY_STADIUMS[stadiumIndex] = updateStadium;
+  res.status(200).json({ stadium: updateStadium });
+};
+const deletePlace = (req, res, next) => {};
 
 exports.getStadiumById = getStadiumById;
 exports.getStadiumByUserId = getStadiumByUserId;
 exports.createStadium = createStadium;
+exports.updateStadium = updateStadium;
+exports.deleteStadium = deletePlace;
