@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http-error");
 
-const DUMMY_STADIUMS = [
+let DUMMY_STADIUMS = [
   {
     id: "s1",
     title: "Santiago Bernabeu",
@@ -60,7 +60,11 @@ const updateStadium = (req, res, next) => {
   DUMMY_STADIUMS[stadiumIndex] = updateStadium;
   res.status(200).json({ stadium: updateStadium });
 };
-const deletePlace = (req, res, next) => {};
+const deletePlace = (req, res, next) => {
+  const stadiumId = req.params.sid;
+  DUMMY_STADIUMS = DUMMY_STADIUMS.filter((s) => s.id !== stadiumId);
+  res.status(200).json({ message: "Stadium Deleted!" });
+};
 
 exports.getStadiumById = getStadiumById;
 exports.getStadiumByUserId = getStadiumByUserId;
