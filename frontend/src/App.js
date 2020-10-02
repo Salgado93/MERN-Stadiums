@@ -5,10 +5,13 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import User from "./user/pages/Users";
+import Users from "./user/pages/Users";
+import NewStadium from "./stadiums/pages/NewStadium";
+import UserStadiums from "./stadiums/pages/UserStadiums";
+import UpdatePlace from "./stadiums/pages/UpdateStadium";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 
-const app = () => {
+const App = () => {
   return (
     <Router>
       <MainNavigation />
@@ -17,6 +20,16 @@ const app = () => {
           <Route path="/" exact>
             <Users />
           </Route>
+          <Route path="/:userId/stadiums" exact>
+            <UserStadiums />
+          </Route>
+          <Route path="/stadiums/new" exact>
+            <NewStadium />
+          </Route>
+          <Route path="/stadiums/:stadiumId">
+            <UpdatePlace />
+          </Route>
+          <Redirect to="/" />
         </Switch>
       </main>
     </Router>
