@@ -17,19 +17,6 @@ const DUMMY_STADIUMS = [
     },
     creator: "u1",
   },
-  {
-    id: "s2",
-    title: "San Siro",
-    description: "Stadium in Italy",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Stadio_Meazza.jpg/1920px-Stadio_Meazza.jpg",
-    address: "Piazzale Angelo Moratti, 20151 Milano MI, Italia",
-    location: {
-      lat: 45.4781236,
-      lng: 9.1217733,
-    },
-    creator: "u2",
-  },
 ];
 
 const UserStadiums = () => {

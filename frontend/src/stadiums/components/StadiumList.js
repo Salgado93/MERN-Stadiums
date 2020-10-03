@@ -5,7 +5,7 @@ import Button from "../../shared/components/FormElements/Button";
 import "./StadiumList.css";
 
 const StadiumList = (props) => {
-  if (props.item.lenght === 0) {
+  if (props.items.lenght === 0) {
     return (
       <div className="stadium-list center">
         <Card>
@@ -18,7 +18,7 @@ const StadiumList = (props) => {
 
   return (
     <ul className="stadium-list">
-      {props.item.map((stadium) => (
+      {props.items.map((stadium) => (
         <StadiumItem
           key={stadium.id}
           id={stadium.id}

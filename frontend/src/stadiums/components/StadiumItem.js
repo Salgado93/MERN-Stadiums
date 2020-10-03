@@ -27,8 +27,8 @@ const StadiumItem = (props) => {
         show={showMap}
         onCancel={closeMapHandler}
         header={props.address}
-        contentClass="stadium-item_modal-content"
-        footerClass="stadium-item_modal-actions"
+        contentClass="stadium-item__modal-content"
+        footerClass="stadium-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
@@ -39,7 +39,7 @@ const StadiumItem = (props) => {
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
         header="Are you sure?"
-        footerClass="stadium-item_modal-actions"
+        footerClass="stadium-item__modal-actions"
         footer={
           <React.Fragment>
             <Button inverse onClick={cancelDeleteHandler}>
@@ -54,16 +54,16 @@ const StadiumItem = (props) => {
         <p>Do you want to delete this place?</p>
       </Modal>
       <li className="stadium-item">
-        <Card className="stadium-item_content">
-          <div className="stadium-item_image">
+        <Card className="stadium-item__content">
+          <div className="stadium-item__image">
             <img src={props.image} alt={props.title} />
           </div>
-          <div className="stadium-item_info">
+          <div className="stadium-item__info">
             <h2>{props.title}</h2>
             <h3>{props.address}</h3>
             <p>{props.description}</p>
           </div>
-          <div className="stadium-item_actions">
+          <div className="stadium-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
