@@ -7,7 +7,7 @@ const DUMMY_STADIUMS = [
   {
     id: "s1",
     title: "Santiago Bernabeu",
-    description: "Real Madrid Stadium",
+    description: "Real Madrid's Stadium.",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Estadio_Santiago_Bernab%C3%A9u_08.jpg/1280px-Estadio_Santiago_Bernab%C3%A9u_08.jpg",
     address: "Av. de Concha Espina, 1, 28036 Madrid, España",

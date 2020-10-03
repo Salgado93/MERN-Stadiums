@@ -8,7 +8,7 @@ const Users = () => {
       name: "Daniel Salgado",
       image:
         "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/athlete-taking-a-break-royalty-free-image-675579770-1545996779.jpg",
-      stadiums: 3,
+      stadiums: 1,
     },
   ];
   return <UsersList items={USERS} />;
