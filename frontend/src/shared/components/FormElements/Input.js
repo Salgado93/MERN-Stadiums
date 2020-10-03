@@ -44,7 +44,7 @@ const Input = (props) => {
 
   const touchHandler = () => {
     dispatch({
-      type: "TOCUH",
+      type: "TOUCH",
     });
   };
 
@@ -76,7 +76,7 @@ const Input = (props) => {
     >
       <label htmlFor={props.id}>{props.label}</label>
       {element}
-      {!input.State.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
 };

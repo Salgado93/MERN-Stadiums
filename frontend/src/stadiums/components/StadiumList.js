@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import Card from "../../shared/components/UIElements/Card";
 import StadiumItem from "./StadiumItem";
 import Button from "../../shared/components/FormElements/Button";

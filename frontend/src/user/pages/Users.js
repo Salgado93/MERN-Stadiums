@@ -1,5 +1,5 @@
-import React from "React";
-import UserLists from "../components/UsersList";
+import React from "react";
+import UsersList from "../components/UsersList";
 
 const Users = () => {
   const USERS = [
@@ -11,7 +11,7 @@ const Users = () => {
       stadiums: 3,
     },
   ];
-  return <UserLists items={USERS} />;
+  return <UsersList items={USERS} />;
 };
 
 export default Users;
