@@ -51,7 +51,7 @@ const StadiumItem = (props) => {
           </React.Fragment>
         }
       >
-        <p>Do you want to delete this place?</p>
+        <p>Do you want to delete this stadium?</p>
       </Modal>
       <li className="stadium-item">
         <Card className="stadium-item__content">
