@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const getCoordinates = require("../util/location");
 const Stadium = require("../models/stadium");
+const stadium = require("../models/stadium");
 
 let DUMMY_STADIUMS = [
   {
@@ -35,11 +36,15 @@ const getStadiumById = async (req, res, next) => {
   res.json({ stadium: stadium.toObject({ getters: true }) });
 };
 
-const getStadiumsByUserId = (req, res, next) => {
+const getStadiumsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
-  const stadiums = DUMMY_STADIUMS.filter((s) => {
-    return s.creator === userId;
-  });
+  let stadiums;
+  try {
+    stadiums = await Stadium.find({ creator: userId });
+  } catch (err) {
+    const error = new HttpError("Listing stadiums failed.", 500);
+    return next(error);
+  }
   if (!stadiums || stadiums.length === 0) {
     return next(
       // new HttpError("Could not find stadiums for the provided user id.", 404) NO ASYNC
@@ -48,7 +53,9 @@ const getStadiumsByUserId = (req, res, next) => {
       )
     );
   }
-  res.json({ stadiums });
+  res.json({
+    stadiums: stadiums.map((stadium) => stadium.toObject({ getters: true })),
+  });
 };
 
 const createStadium = async (req, res, next) => {
