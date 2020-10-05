@@ -15,16 +15,24 @@ let DUMMY_STADIUMS = [
   },
 ];
 
-const getStadiumById = (req, res, next) => {
+const getStadiumById = async (req, res, next) => {
   //console.log("GET Request in Stadiums");
   const stadiumId = req.params.sid; // Tomar valor concreto del url.
-  const stadium = DUMMY_STADIUMS.find((s) => {
-    return s.id === stadiumId;
-  });
-  if (!stadium) {
-    throw new HttpError("Could not find a stadium for the provided id.", 404);
+  let stadium;
+  try {
+    stadium = await Stadium.findById(stadiumId);
+  } catch (err) {
+    const error = new HttpError("Could not find stadium.", 500);
+    return next(error);
   }
-  res.json({ stadium });
+  if (!stadium) {
+    const error = HttpError(
+      "Could not find a stadium for the provided id.",
+      404
+    );
+    return next(error);
+  }
+  res.json({ stadium: stadium.toObject({ getters: true }) });
 };
 
 const getStadiumsByUserId = (req, res, next) => {
@@ -93,7 +101,7 @@ const updateStadium = (req, res, next) => {
   res.status(200).json({ stadium: updateStadium });
 };
 
-const deletePlace = (req, res, next) => {
+const deleteStadium = (req, res, next) => {
   const stadiumId = req.params.sid;
   if (!DUMMY_STADIUMS.find((s) => s.id === stadiumId)) {
     throw new HttpError("Could not find a stadium for the provided id.", 404);
@@ -106,4 +114,4 @@ exports.getStadiumById = getStadiumById;
 exports.getStadiumsByUserId = getStadiumsByUserId;
 exports.createStadium = createStadium;
 exports.updateStadium = updateStadium;
-exports.deleteStadium = deletePlace;
+exports.deleteStadium = deleteStadium;
