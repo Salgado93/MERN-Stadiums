@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const getCoordinates = require("../util/location");
+const Stadium = require("../models/stadium");
 
 let DUMMY_STADIUMS = [
   {
@@ -57,15 +58,22 @@ const createStadium = async (req, res, next) => {
     return next(error);
   }
 
-  const createdStadium = {
-    id: uuidv4(),
+  const createdStadium = new Stadium({
     title,
     description,
-    location: coordinates,
     address,
+    location: coordinates,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
     creator,
-  };
-  DUMMY_STADIUMS.push(createdStadium);
+  });
+  //DUMMY_STADIUMS.push(createdStadium);
+  try {
+    await createdStadium.save();
+  } catch (err) {
+    const error = new HttpError("Creating Stadium failed.", 500);
+    return next(error);
+  }
   res.status(201).json({ stadium: createdStadium });
 };
 
