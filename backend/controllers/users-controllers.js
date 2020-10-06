@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
 const USUARIOS = [
   {
@@ -15,25 +16,40 @@ const getUsers = (req, res, next) => {
   res.json({ users: USUARIOS });
 };
 
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     //console.log(errors);
-    throw new HttpError("Invalid Inputs, check your data.", 422);
+    return next(new HttpError("Invalid Inputs, check your data.", 422));
   }
-  const { name, email, password } = req.body;
-  const userExists = USUARIOS.find((u) => u.email === email);
-  if (userExists) {
-    throw new HttpError("User already exists.", 422);
+  const { name, email, password, stadiums } = req.body;
+
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("Sign up failed.", 500);
+    return next(error);
   }
-  const createdUser = {
-    id: uuidv4(),
+  if (existingUser) {
+    const error = new HttpError("User exists already.", 422);
+  }
+  const createdUser = new User({
     name,
-    email, //email:email
+    email,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
     password,
-  };
-  USUARIOS.push(createdUser);
-  res.status(201).json({ user: createdUser });
+    stadiums,
+  });
+  try {
+    await createdUser.save();
+  } catch (err) {
+    const error = new HttpError("Signing Up failed.", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = (req, res, next) => {
