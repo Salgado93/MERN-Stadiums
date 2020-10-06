@@ -1,9 +1,10 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const getCoordinates = require("../util/location");
 const Stadium = require("../models/stadium");
-const stadium = require("../models/stadium");
+const User = require("../models/user");
 
 let DUMMY_STADIUMS = [
   {
@@ -82,9 +83,26 @@ const createStadium = async (req, res, next) => {
       "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
     creator,
   });
+  let user;
+  try {
+    user = await User.findById(creator);
+  } catch (err) {
+    const error = new HttpError("Creating stadium failed.", 500);
+    return next(error);
+  }
+  if (!user) {
+    const error = new HttpError("Could not find use for provided id", 404);
+    return next(error);
+  }
+  console.log(user);
   //DUMMY_STADIUMS.push(createdStadium);
   try {
-    await createdStadium.save();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdStadium.save({ session: sess });
+    user.stadiums.push(createdStadium);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError("Creating Stadium failed.", 500);
     return next(error);

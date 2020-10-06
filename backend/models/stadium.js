@@ -1,5 +1,6 @@
-const moongoose = require("mongoose");
-const Schema = moongoose.Schema;
+const mongoose = require("mongoose");
+const mongooseUniqueValidator = require("mongoose-unique-validator");
+const Schema = mongoose.Schema;
 
 const stadiumSchema = new Schema({
   title: { type: String, required: true },
@@ -9,7 +10,7 @@ const stadiumSchema = new Schema({
     lat: { type: Number, require: true },
     lng: { type: Number, require: true },
   },
-  creator: { type: String, required: true },
+  creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
 
-module.exports = moongoose.model("Stadium", stadiumSchema);
+module.exports = mongoose.model("Stadium", stadiumSchema);

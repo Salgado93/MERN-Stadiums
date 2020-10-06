@@ -2,7 +2,6 @@ const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
-const user = require("../models/user");
 
 const USUARIOS = [
   {
@@ -31,7 +30,7 @@ const signup = async (req, res, next) => {
     //console.log(errors);
     return next(new HttpError("Invalid Inputs, check your data.", 422));
   }
-  const { name, email, password, stadiums } = req.body;
+  const { name, email, password } = req.body;
 
   let existingUser;
   try {
@@ -49,7 +48,7 @@ const signup = async (req, res, next) => {
     image:
       "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
     password,
-    stadiums,
+    stadiums: [],
   });
   try {
     await createdUser.save();
