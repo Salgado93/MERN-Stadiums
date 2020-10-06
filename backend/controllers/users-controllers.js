@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const user = require("../models/user");
 
 const USUARIOS = [
   {
@@ -12,8 +13,16 @@ const USUARIOS = [
   },
 ];
 
-const getUsers = (req, res, next) => {
-  res.json({ users: USUARIOS });
+const getUsers = async (req, res, next) => {
+  //res.json({ users: USUARIOS });
+  let users;
+  try {
+    users = await User.find({}, "-password");
+  } catch (err) {
+    const error = new HttpError("Getting users failed.", 500);
+    return next(error);
+  }
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) }); //Find() returns Array.
 };
 
 const signup = async (req, res, next) => {
