@@ -26,7 +26,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://Salgado:5VZfbgIxnQ5PKat7@cluster0.v5uwt.mongodb.net/stadiums?retryWrites=true&w=majority"
+    "mongodb+srv://Salgado:5VZfbgIxnQ5PKat7@cluster0.v5uwt.mongodb.net/stadiums?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
     console.log("Connected to MongoDB.");

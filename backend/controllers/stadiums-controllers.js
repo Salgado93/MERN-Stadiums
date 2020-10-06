@@ -112,18 +112,27 @@ const updateStadium = async (req, res, next) => {
   try {
     await stadium.save();
   } catch (err) {
-    const error = new HttpError("Could not delete stadium.", 500);
+    const error = new HttpError("Could not update stadium.", 500);
     return next(error);
   }
   res.status(200).json({ stadium: stadium.toObject({ getters: true }) });
 };
 
-const deleteStadium = (req, res, next) => {
+const deleteStadium = async (req, res, next) => {
   const stadiumId = req.params.sid;
-  if (!DUMMY_STADIUMS.find((s) => s.id === stadiumId)) {
-    throw new HttpError("Could not find a stadium for the provided id.", 404);
+  let stadium;
+  try {
+    stadium = await Stadium.findById(stadiumId);
+  } catch (err) {
+    const error = new HttpError("Could not delete stadium.", 500);
+    return next(error);
   }
-  DUMMY_STADIUMS = DUMMY_STADIUMS.filter((s) => s.id !== stadiumId);
+  try {
+    await stadium.remove();
+  } catch (err) {
+    const error = new HttpError("Could not delete stadium.", 500);
+    return next(error);
+  }
   res.status(200).json({ message: "Stadium Deleted!" });
 };
 
