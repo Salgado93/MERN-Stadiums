@@ -140,13 +140,23 @@ const deleteStadium = async (req, res, next) => {
   const stadiumId = req.params.sid;
   let stadium;
   try {
-    stadium = await Stadium.findById(stadiumId);
+    stadium = await Stadium.findById(stadiumId).populate("creator"); // Refer to a doc stored in another collection.
   } catch (err) {
     const error = new HttpError("Could not delete stadium.", 500);
     return next(error);
   }
+  if (!stadium) {
+    const error = new HttpError("Could not find stadium for provided id.", 404);
+    return next(error);
+  }
+
   try {
-    await stadium.remove();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await stadium.remove({ session: sess });
+    stadium.creator.stadiums.pull(stadium);
+    await stadium.creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError("Could not delete stadium.", 500);
     return next(error);
