@@ -92,7 +92,7 @@ const createStadium = async (req, res, next) => {
   res.status(201).json({ stadium: createdStadium });
 };
 
-const updateStadium = (req, res, next) => {
+const updateStadium = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     //console.log(errors);
@@ -100,12 +100,22 @@ const updateStadium = (req, res, next) => {
   }
   const { title, description } = req.body;
   const stadiumId = req.params.sid;
-  const updateStadium = { ...DUMMY_STADIUMS.find((s) => s.id === stadiumId) };
-  const stadiumIndex = DUMMY_STADIUMS.findIndex((s) => s.id === stadiumId);
-  updateStadium.title = title;
-  updateStadium.description = description;
-  DUMMY_STADIUMS[stadiumIndex] = updateStadium;
-  res.status(200).json({ stadium: updateStadium });
+  let stadium;
+  try {
+    stadium = await Stadium.findById(stadiumId);
+  } catch (err) {
+    const error = new HttpError("Could not update stadium.", 500);
+    return next(error);
+  }
+  stadium.title = title;
+  stadium.description = description;
+  try {
+    await stadium.save();
+  } catch (err) {
+    const error = new HttpError("Could not delete stadium.", 500);
+    return next(error);
+  }
+  res.status(200).json({ stadium: stadium.toObject({ getters: true }) });
 };
 
 const deleteStadium = (req, res, next) => {
