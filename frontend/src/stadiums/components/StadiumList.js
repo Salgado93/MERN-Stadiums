@@ -5,7 +5,7 @@ import Button from "../../shared/components/FormElements/Button";
 import "./StadiumList.css";
 
 const StadiumList = (props) => {
-  if (props.items.lenght === 0) {
+  if (props.items.length === 0) {
     return (
       <div className="stadium-list center">
         <Card>
