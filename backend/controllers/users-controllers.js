@@ -47,7 +47,7 @@ const signup = async (req, res, next) => {
     name,
     email,
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png",
     password,
     stadiums: [],
   });
