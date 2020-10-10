@@ -28,14 +28,15 @@ const getStadiumById = async (req, res, next) => {
 
 const getStadiumsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
-  let stadiums;
+  //let stadiums;
+  let userWithStadiums;
   try {
-    stadiums = await Stadium.find({ creator: userId });
+    userWithStadiums = await User.findById(userId).populate('stadiums'); 
   } catch (err) {
-    const error = new HttpError("Listing stadiums failed.", 500);
+    const error = new HttpError("Fetching stadiums failed.", 500);
     return next(error);
   }
-  if (!stadiums || stadiums.length === 0) {
+  if (!userWithStadiums || userWithStadiums.stadiums.length === 0) {
     return next(
       // new HttpError("Could not find stadiums for the provided user id.", 404) NO ASYNC
       next(
@@ -44,7 +45,7 @@ const getStadiumsByUserId = async (req, res, next) => {
     );
   }
   res.json({
-    stadiums: stadiums.map((stadium) => stadium.toObject({ getters: true })),
+    stadiums: userWithStadiums.stadiums.map(stadium => stadium.toObject({ getters: true })),
   });
 };
 

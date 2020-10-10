@@ -22,7 +22,7 @@ const StadiumList = (props) => {
         <StadiumItem
           key={stadium.id}
           id={stadium.id}
-          image={stadium.imageUrl}
+          image={stadium.image}
           title={stadium.title}
           description={stadium.description}
           address={stadium.address}
