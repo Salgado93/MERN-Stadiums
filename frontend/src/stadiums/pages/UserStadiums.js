@@ -42,6 +42,9 @@ const UserStadiums = () => {
     fetchStadiums();
   },[sendRequest, userId]);
 
+  const stadiumDeletedHandler = (deletedStadiumId) => {
+    setLoadedStadiums(prevStadiums => prevStadiums.filter(stadium => stadium.id !== deletedStadiumId));
+  }
 
   return(
     <React.Fragment>
@@ -51,7 +54,7 @@ const UserStadiums = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && loadedStadiums && <StadiumList items={loadedStadiums} />}
+      {!isLoading && loadedStadiums && <StadiumList items={loadedStadiums} onDeleteStadium={stadiumDeletedHandler} />}
     </React.Fragment>
   ) 
 };

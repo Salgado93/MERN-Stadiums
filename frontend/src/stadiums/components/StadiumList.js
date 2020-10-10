@@ -28,6 +28,7 @@ const StadiumList = (props) => {
           address={stadium.address}
           creatorId={stadium.creator}
           coordinates={stadium.location}
+          onDelete={props.onDeleteStadium}
         />
       ))}
     </ul>
