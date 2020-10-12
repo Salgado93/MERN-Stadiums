@@ -27,7 +27,6 @@ const getUsers = async (req, res, next) => {
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    //console.log(errors);
     return next(new HttpError("Invalid Inputs, check your data.", 422));
   }
   const { name, email, password } = req.body;
@@ -46,8 +45,7 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png",
+    image: req.file.path,
     password,
     stadiums: [],
   });
