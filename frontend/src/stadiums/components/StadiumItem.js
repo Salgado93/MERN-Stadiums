@@ -70,7 +70,7 @@ const StadiumItem = (props) => {
         <Card className="stadium-item__content">
           {isLoading && <LoadingSpinner asOverlay/>}
           <div className="stadium-item__image">
-            <img src={props.image} alt={props.title} />
+            <img src={`http://localhost:5000/${props.image}`} alt={props.title} />
           </div>
           <div className="stadium-item__info">
             <h2>{props.title}</h2>

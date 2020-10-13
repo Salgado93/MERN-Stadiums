@@ -69,8 +69,7 @@ const createStadium = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Estudio_Lamela_SantiagoBernabeu.jpg",
+    image: req.file.path,
     creator,
   });
   let user;
