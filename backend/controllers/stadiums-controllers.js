@@ -1,3 +1,4 @@
+const fs = require ('fs');
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
@@ -134,10 +135,13 @@ const deleteStadium = async (req, res, next) => {
     const error = new HttpError("Could not delete stadium.", 500);
     return next(error);
   }
+
   if (!stadium) {
     const error = new HttpError("Could not find stadium for provided id.", 404);
     return next(error);
   }
+
+  const imagePath = stadium.image;
 
   try {
     const sess = await mongoose.startSession();
@@ -150,6 +154,9 @@ const deleteStadium = async (req, res, next) => {
     const error = new HttpError("Could not delete stadium.", 500);
     return next(error);
   }
+  fs.unlink(imagePath, err => {
+    console.log(err);
+  });
   res.status(200).json({ message: "Stadium Deleted!" });
 };
 

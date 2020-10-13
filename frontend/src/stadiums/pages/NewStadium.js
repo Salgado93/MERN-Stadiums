@@ -94,9 +94,7 @@ const NewStadium = () => {
         onInput={inputHandler} 
         errorText="Please upload an image."
       />
-      <Button type="submit" disabled={!formState.isValid}>
-        ADD STADIUM
-      </Button>
+      <Button type="submit" disabled={!formState.isValid}>ADD STADIUM</Button>
     </form>
     </React.Fragment>
   );
