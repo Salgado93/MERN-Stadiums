@@ -102,6 +102,7 @@ const createStadium = async (req, res, next) => {
 
 const updateStadium = async (req, res, next) => {
   const errors = validationResult(req);
+  
   if (!errors.isEmpty()) {
     //console.log(errors);
     return next(new HttpError("Invalid Inputs, check your data.", 422));
@@ -123,6 +124,7 @@ const updateStadium = async (req, res, next) => {
 
   stadium.title = title;
   stadium.description = description;
+  
   try {
     await stadium.save();
   } catch (err) {
@@ -135,15 +137,24 @@ const updateStadium = async (req, res, next) => {
 const deleteStadium = async (req, res, next) => {
   const stadiumId = req.params.sid;
   let stadium;
+
   try {
     stadium = await Stadium.findById(stadiumId).populate("creator"); // Refer to a doc stored in another collection.
   } catch (err) {
-    const error = new HttpError("Could not delete stadium.", 500);
+    const error = new HttpError("Something went wrong, could not delete stadium.", 500);
     return next(error);
   }
 
   if (!stadium) {
     const error = new HttpError("Could not find stadium for provided id.", 404);
+    return next(error);
+  }
+
+  if (stadium.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      'You are not allowed to delete this stadium.',
+      401
+    );
     return next(error);
   }
 
