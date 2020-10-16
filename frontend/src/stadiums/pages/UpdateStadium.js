@@ -41,7 +41,7 @@ const UpdateStadium = () => {
     const fetchStadium = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/stadiums/${stadiumId}`
+          `${process.env.REACT_APP_BACKEND_URL}/stadiums/${stadiumId}`
         );
         setLoadedStadium(responseData.stadium);
         setFormData(
@@ -69,7 +69,7 @@ const UpdateStadium = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/stadiums/${stadiumId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/stadiums/${stadiumId}`,
         'PATCH',
         JSON.stringify({
           title: formState.inputs.title.value,

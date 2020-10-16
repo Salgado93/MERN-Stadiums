@@ -32,7 +32,7 @@ const UserStadiums = () => {
     const fetchStadiums = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/stadiums/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/stadiums/user/${userId}`
           );
         setLoadedStadiums(responseData.stadiums);
       } catch (err) {
