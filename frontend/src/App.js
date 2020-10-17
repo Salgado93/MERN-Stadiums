@@ -1,18 +1,25 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import Users from "./user/pages/Users";
-import NewStadium from "./stadiums/pages/NewStadium";
-import UserStadiums from "./stadiums/pages/UserStadiums";
-import UpdatePlace from "./stadiums/pages/UpdateStadium";
+//import Users from "./user/pages/Users";
+//import NewStadium from "./stadiums/pages/NewStadium";
+//import UserStadiums from "./stadiums/pages/UserStadiums";
+//import UpdateStadium from "./stadiums/pages/UpdateStadium";
+//import Auth from "./user/pages/Auth";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "./shared/context/auth-context";
-import Auth from "./user/pages/Auth";
 import {useAuth} from './shared/hooks/auth-hook';
+
+const Users = React.lazy(() => import('./user/pages/Users'));
+const NewStadium = React.lazy(() => import('./stadiums/pages/NewStadium'));
+const UserStadiums = React.lazy(() => import('./stadiums/pages/UserStadiums'));
+const UpdateStadium = React.lazy(() => import('./stadiums/pages/UpdateStadium'));
+const Auth = React.lazy(() => import('./user/pages/Auth'));
 
 const App = () => {
   const {token, login, logout, userId} = useAuth();
@@ -31,7 +38,7 @@ const App = () => {
           <NewStadium />
         </Route>
         <Route path="/stadiums/:stadiumId">
-          <UpdatePlace />
+          <UpdateStadium />
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -59,7 +66,17 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
-        <main>{routes}</main>
+        <main>
+          <Suspense 
+            fallback={
+              <div className="center">
+                <LoadingSpinner/>
+              </div>
+            }
+          >
+            {routes}
+          </Suspense>
+        </main>
       </Router>
     </AuthContext.Provider>
   );

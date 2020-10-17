@@ -2,7 +2,7 @@
     "env": {
         "DB_USER": "Salgado",
         "DB_PASSWORD": "5VZfbgIxnQ5PKat7",
-        "DB_NAME": "stadiums",
+        "DB_NAME": "stadiums-production",
         "GOOGLE_API_KEY": "AIzaSyCwTe4PtC1uOScW3WI8ok90UqR5geDxGPI",
          "JWT_KEY": "supersecret_dont_share"
     }
