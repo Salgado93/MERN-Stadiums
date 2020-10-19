@@ -78,7 +78,7 @@ const Auth = () => {
             password: formState.inputs.password.value,
           }),
           {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         );
         auth.login(responseData.userId, responseData.token);

@@ -17,7 +17,7 @@
 .user-item a:active {
   background: #ff0055;
 }
-.user-item__content {
+.card.user-item__content {
   padding: 0;
 }
 

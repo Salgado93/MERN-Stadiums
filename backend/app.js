@@ -13,16 +13,16 @@ app.use(bodyParser.json());
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type, Accept,Authorization"
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
-app.use("/api/stadiums", stadiumsRoutes);
-app.use("/api/users", userRoutes);
+app.use('/api/stadiums', stadiumsRoutes);
+app.use('/api/users', userRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Route not found.", 404);
@@ -44,12 +44,11 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.v5uwt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.v5uwt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
-    console.log("Connected to MongoDB.");
-    app.listen(5000);
+    //console.log("Connected to MongoDB.");
+    app.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
     console.log(err);

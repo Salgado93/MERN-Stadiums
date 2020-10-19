@@ -5,14 +5,6 @@ const jwt = require('jsonwebtoken');
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 
-/*const USUARIOS = [
-  {
-    id: "u1",
-    name: "Daniel Salgado",
-    email: "dsalgado93@outlook.com",
-    password: "testers",
-  },
-];*/
 
 const getUsers = async (req, res, next) => {
   //res.json({ users: USUARIOS });
