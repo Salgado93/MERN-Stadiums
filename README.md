@@ -1,5 +1,8 @@
 # MERN-Stadiums
-MERN application where users can share stadiums with other users. 
+MERN application where users can share stadiums with other users.
+Deploy is on Heroku and Firebase.
+
+https://stadiums-mern.web.app/
 
 ![Captura de pantalla (271)](https://user-images.githubusercontent.com/19229810/95926916-b04dec00-0d7a-11eb-8202-623a3481d806.png)
 
