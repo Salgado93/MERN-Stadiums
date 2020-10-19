@@ -1,0 +1,9 @@
+{
+    "env": {
+        "DB_USER": "Salgado",
+        "DB_PASSWORD": "",
+        "DB_NAME": "stadiums-production",
+        "GOOGLE_API_KEY": "",
+         "JWT_KEY": ""
+    }
+}
